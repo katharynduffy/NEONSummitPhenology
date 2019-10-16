@@ -23,12 +23,55 @@ colnames(phenos)
 
 Now let's filter for NEON sites:
 ```{r}
-NEONphenos=phenos%>%
-  filter(group==c('NEON', 'NEON AMERIFLUX'))
-head(NEONphenos)
+phenos=phenos%>%
+  filter(group=='NEON AMERIFLUX')
+head(phenos)
 ```
 
-Filter for the 3 sites that you guys mentioned:
+
+`
+
+Example of data grab:
+ 
 ```{r}
-NEONphenos=NEONphenos[c(2, 10, 36), ]
+phenocamr::download_phenocam(
+  frequency = 3,
+  veg_type = phenos$primary_veg_type[6],
+  roi_id = 1000,
+  site = phenos$site[6],
+  phenophase = TRUE,
+  out_dir = "."
+  )
+```
+```
+```{r}
+# load the time series data but replace the csv filename with whatever you downloaded
+df <- read.table("NEON.D03.DSNY.DP1.00033_GR_1000_3day.csv", header = TRUE, sep = ",")
+
+# read in the transition date file
+td <- read.table("NEON.D03.DSNY.DP1.00033_GR_1000_3day_transition_dates.csv",
+                 header = TRUE,
+                 sep = ",")
+```
+
+```{r}
+p = plot_ly() %>%
+  add_trace(
+  data = df,
+  x = ~ as.Date(date),
+  y = ~ scale(smooth_gcc_90, center = TRUE, scale = TRUE),
+  name = 'Smoothed GCC',
+  showlegend = TRUE,
+  type = 'scatter',
+  mode = 'line'
+) %>% add_markers(
+  data=df,
+  x ~ as.Date(date),
+  y = ~scale(gcc_90, center = TRUE, scale = TRUE),
+  name = 'GCC',
+  type = 'scatter',
+  color ='#07A4B5', 
+  opacity=.5
+)
+p
 ```
