@@ -1,0 +1,34 @@
+---
+title: "NEONphenology"
+author: "K Duffy"
+date: "10/16/2019"
+output: html_document
+---
+
+```{r, silent=TRUE}
+library(phenocamapi)
+library(plotly)
+library(phenocamr)
+library(dplyr)
+```
+
+Let's start by pulling in a list of sites that have AmeriFlux towers and PhenoCams via the phenocamapi package:
+
+```{r}
+phenos=get_phenos()
+#and let's check the column names:
+colnames(phenos)
+
+```
+
+Filter for phenocams in ecoregion 8, filter out agricultural sites, select southern sites:
+```{r}
+NEONphenos=phenos%>%
+  filter(group==c('NEON', 'NEON AMERIFLUX'))
+head(NEONphenos)
+```
+
+Filter for the 3 sites that you guys mentioned:
+```{r}
+NEONphenos=NEONphenos[c(2, 10, 36), ]
+```
