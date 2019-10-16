@@ -12,7 +12,7 @@ library(phenocamr)
 library(dplyr)
 ```
 
-Let's start by pulling in a list of sites that have AmeriFlux towers and PhenoCams via the phenocamapi package:
+Let's start by pulling in a list of PhenoCam sites:
 
 ```{r}
 phenos=get_phenos()
@@ -21,7 +21,7 @@ colnames(phenos)
 
 ```
 
-Filter for phenocams in ecoregion 8, filter out agricultural sites, select southern sites:
+Now let's filter for NEON sites:
 ```{r}
 NEONphenos=phenos%>%
   filter(group==c('NEON', 'NEON AMERIFLUX'))
