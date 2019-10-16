@@ -1,0 +1,68 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(tidyverse)
+library(neonUtilities)
+library(data.table)
+library(phenocamapi)
+library(lubridate)
+library(jpeg)
+library(phenocamr)
+library(XML)
+library(RCurl)
+library(rlist)
+
+```
+
+
+
+```{r select sites to pull}
+
+sites <- c("HARV", "OSBS", "CPER")
+
+
+```
+
+```{r pull flux data}
+## from tutorial https://www.neonscience.org/eddy-data-intro
+
+zipsByProduct(dpID="DP4.00200.001", package="basic", 
+              site=sites, 
+              #startdate="2018-06", enddate="2018-07",
+              savepath="/data", 
+              check.size=F)
+
+flux_dpid <- "DP4.00200.001"
+flux <- stackEddy(filepath=paste0(getwd(), "/neonsummit/data/filesToStack00200"),
+                  level="dp04")
+
+```
+
+
+```{r pull an load in-situ phenology data}
+
+phe_dpid <- 'DP1.10055.001'
+zipsByProduct(dpID='DP1.10055.001', package ="basic", 
+              site=sites, 
+              #savepath="data", 
+              check.size = F)
+
+stackByTable(phe_dpid, filepath=paste0(getwd(), "/filesToStack10055"), 
+             savepath = paste0(getwd(), "/filesToStack10055"), folder=T)  #phe data
+ 
+
+
+statusIntensity <- read.csv(paste0(getwd(), '/filesToStack10055/stackedFiles/phe_statusintensity.csv'),
+                   stringsAsFactors = F, header = T)
+
+perind <- read.csv(paste0(getwd(), '/filesToStack10055/stackedFiles/phe_perindividual.csv'),
+                            stringsAsFactors = F, header = T)
+
+```
