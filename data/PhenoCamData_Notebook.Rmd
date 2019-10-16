@@ -38,9 +38,9 @@ Example of data grab:
 ```{r}
 phenocamr::download_phenocam(
   frequency = 3,
-  veg_type = phenos$primary_veg_type[71],
+  veg_type = phenos$primary_veg_type[69],
   roi_id = 1000,
-  site = phenos$site[71],
+  site = phenos$site[69],
   phenophase = TRUE,
   out_dir = "."
   )
@@ -48,10 +48,10 @@ phenocamr::download_phenocam(
 
 ```{r}
 # load the time series data but replace the csv filename with whatever you downloaded
-df <- read.table("NEON.D16.ABBY.DP1.00033_EN_1000_3day.csv", header = TRUE, sep = ",")
+df <- read.table("NEON.D15.ONAQ.DP1.00033_SH_1000_3day.csv", header = TRUE, sep = ",")
 
 # read in the transition date file
-td <- read.table("NEON.D16.ABBY.DP1.00033_EN_1000_3day_transition_dates.csv",
+td <- read.table("NEON.D15.ONAQ.DP1.00033_SH_1000_3day_transition_dates.csv",
                  header = TRUE,
                  sep = ",")
 ```
