@@ -14,6 +14,8 @@ library(dplyr)
 
 Let's start by pulling in a list of PhenoCam sites:
 
+
+
 ```{r}
 phenos=get_phenos()
 #and let's check the column names:
@@ -32,7 +34,7 @@ head(phenos)
 `
 
 Example of data grab:
- 
+
 ```{r}
 phenocamr::download_phenocam(
   frequency = 3,
@@ -70,7 +72,7 @@ p = plot_ly() %>%
   y = ~scale(gcc_90, center = TRUE, scale = TRUE),
   name = 'GCC',
   type = 'scatter',
-  color ='#07A4B5', 
+  color ='#07A4B5',
   opacity=.5
 )
 p
