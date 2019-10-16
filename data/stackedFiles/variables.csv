@@ -1,0 +1,79 @@
+table,fieldName,description,dataType,units,downloadPkg
+phe_statusintensity,uid,"Unique ID within NEON database; an identifier for the record",string,NA,basic
+phe_statusintensity,namedLocation,"Name of the measurement location in the NEON database",string,NA,basic
+phe_statusintensity,domainID,"Unique identifier of the NEON domain",string,NA,basic
+phe_statusintensity,siteID,"NEON site code",string,NA,basic
+phe_statusintensity,plotID,"Plot identifier (NEON site code_XXX)",string,NA,basic
+phe_statusintensity,date,"Date or date and time of measurement, observation, or collection event",dateTime,NA,basic
+phe_statusintensity,editedDate,"The date-time that record was edited",dateTime,NA,basic
+phe_statusintensity,dayOfYear,"The ordinal day of the year on which the object or observation was collected_(1 for January 1, 365 for December 31, except in a leap year, in which case it is 366)",unsigned integer,nominalDay,basic
+phe_statusintensity,individualID,"Domain-level unique identifier for an individual: NEON.MOD.D##.######",string,NA,basic
+phe_statusintensity,phenophaseName,"Name of phenophase following NPN definitions",string,NA,basic
+phe_statusintensity,phenophaseStatus,"Status of the phenophase: yes, no, uncertain or missed",string,NA,basic
+phe_statusintensity,phenophaseIntensityDefinition,"Quantity monitored for evaluating phenophase intensity, derived from NPN intensity questions",string,NA,basic
+phe_statusintensity,phenophaseIntensity,"Intensity value range for the corresponding phenophase",string,NA,basic
+phe_statusintensity,samplingProtocolVersion,"The NEON document number and version where detailed information regarding the sampling method used is available; format NEON.DOC.######vX",string,NA,basic
+phe_statusintensity,measuredBy,"An identifier for the technician who measured or collected the data",string,NA,basic
+phe_statusintensity,recordedBy,"An identifier for the technician who recorded the data",string,NA,basic
+phe_statusintensity,remarks,"Technician notes; free text comments accompanying the record",string,NA,basic
+phe_statusintensity,dataQF,"Data quality flag",string,NA,basic
+phe_perindividualperyear,uid,"Unique ID within NEON database; an identifier for the record",string,NA,basic
+phe_perindividualperyear,namedLocation,"Name of the measurement location in the NEON database",string,NA,basic
+phe_perindividualperyear,domainID,"Unique identifier of the NEON domain",string,NA,basic
+phe_perindividualperyear,siteID,"NEON site code",string,NA,basic
+phe_perindividualperyear,plotID,"Plot identifier (NEON site code_XXX)",string,NA,basic
+phe_perindividualperyear,date,"Date or date and time of measurement, observation, or collection event",dateTime,NA,basic
+phe_perindividualperyear,editedDate,"The date-time that record was edited",dateTime,NA,basic
+phe_perindividualperyear,individualID,"Domain-level unique identifier for an individual: NEON.MOD.D##.######",string,NA,basic
+phe_perindividualperyear,patchOrIndividual,"Unit of measurement",string,NA,basic
+phe_perindividualperyear,canopyPosition,"Vertical status of an individual relative to its neighbors",string,NA,basic
+phe_perindividualperyear,plantStatus,"Physical status of individual: live, dead, lost",string,NA,basic
+phe_perindividualperyear,stemDiameter,"Cross-sectional stem diameter",real,centimeter,basic
+phe_perindividualperyear,measurementHeight,"Height at which stemDiameter is measured",real,centimeter,basic
+phe_perindividualperyear,maxCanopyDiameter,"Maximum canopy diameter of the individual or patch",real,meter,basic
+phe_perindividualperyear,ninetyCanopyDiameter,"Canopy diameter perpendicular to maxCanopyDiameter",real,meter,basic
+phe_perindividualperyear,patchSize,"Size (in square meters) of the patch",real,squareMeter,basic
+phe_perindividualperyear,percentCover,"Ocular estimate of cover of the index (e.g., species) as a percent",real,percent,basic
+phe_perindividualperyear,height,"Highest point of an individual or average height of a patch",real,meter,basic
+phe_perindividualperyear,diseaseType,"Specific disease present, if known",string,NA,basic
+phe_perindividualperyear,samplingProtocolVersion,"The NEON document number and version where detailed information regarding the sampling method used is available; format NEON.DOC.######vX",string,NA,basic
+phe_perindividualperyear,measuredBy,"An identifier for the technician who measured or collected the data",string,NA,basic
+phe_perindividualperyear,recordedBy,"An identifier for the technician who recorded the data",string,NA,basic
+phe_perindividualperyear,remarks,"Technician notes; free text comments accompanying the record",string,NA,basic
+phe_perindividualperyear,dataQF,"Data quality flag",string,NA,basic
+phe_perindividual,uid,"Unique ID within NEON database; an identifier for the record",string,NA,basic
+phe_perindividual,namedLocation,"Name of the measurement location in the NEON database",string,NA,basic
+phe_perindividual,domainID,"Unique identifier of the NEON domain",string,NA,basic
+phe_perindividual,siteID,"NEON site code",string,NA,basic
+phe_perindividual,plotID,"Plot identifier (NEON site code_XXX)",string,NA,basic
+phe_perindividual,decimalLatitude,"The geographic latitude (in decimal degrees, WGS84) of the geographic center of the reference area",real,decimalDegree,basic
+phe_perindividual,decimalLongitude,"The geographic longitude (in decimal degrees, WGS84) of the geographic center of the reference area",real,decimalDegree,basic
+phe_perindividual,geodeticDatum,"Model used to measure horizontal position on the earth",string,NA,basic
+phe_perindividual,coordinateUncertainty,"The horizontal distance (in meters) from the given decimalLatitude and decimalLongitude describing the smallest circle containing the whole of the Location. Zero is not a valid value for this term",real,meter,basic
+phe_perindividual,elevation,"Elevation (in meters) above sea level",real,meter,basic
+phe_perindividual,elevationUncertainty,"Uncertainty in elevation values (in meters)",real,meter,basic
+phe_perindividual,subtypeSpecification,"Type of plot or grid; mammal: diversity, pathogen, training; bird: ninePoints, onePoint; phenology: primary, phenocam",string,NA,basic
+phe_perindividual,transectMeter,"Distance (in meters) of individual from beginning of transect, when transect is walked in clockwise direction",real,meter,basic
+phe_perindividual,directionFromTransect,"Direction (right or left) of individual from transect, when transect is walked in a clockwise direction",string,NA,basic
+phe_perindividual,ninetyDegreeDistance,"Perpendicular distance from transect to selected individual (in meters)",real,meter,basic
+phe_perindividual,sampleLatitude,"Latitude of the sampled location",real,decimalDegree,basic
+phe_perindividual,sampleLongitude,"Longitude of the sampled location",real,decimalDegree,basic
+phe_perindividual,sampleGeodeticDatum,"Model used to measure horizontal position, of the sample, on the earth",string,NA,basic
+phe_perindividual,sampleCoordinateUncertainty,"Coordinate uncertainty of a sampled location",real,meter,basic
+phe_perindividual,sampleElevation,"Elevation (in meters) above sea level of a sampled location",real,meter,basic
+phe_perindividual,sampleElevationUncertainty,"Uncertainty in elevation values (in meters) of a sampled location",real,meter,basic
+phe_perindividual,date,"Date or date and time of measurement, observation, or collection event",dateTime,NA,basic
+phe_perindividual,editedDate,"The date-time that record was edited",dateTime,NA,basic
+phe_perindividual,individualID,"Domain-level unique identifier for an individual: NEON.MOD.D##.######",string,NA,basic
+phe_perindividual,taxonID,"Species code, based on one or more sources",string,NA,basic
+phe_perindividual,scientificName,"Scientific name, associated with the taxonID. This is the name of the lowest level taxonomic rank that can be determined",string,NA,basic
+phe_perindividual,identificationQualifier,"A standard term to express the determiner's doubts about the Identification",string,NA,basic
+phe_perindividual,taxonRank,"The lowest level taxonomic rank that can be determined for the individual or specimen",string,NA,basic
+phe_perindividual,growthForm,"The growth form classification",string,NA,basic
+phe_perindividual,vstTag,"Indicator for whether a tagID is associated with vegetation structure measurements",string,NA,basic
+phe_perindividual,samplingProtocolVersion,"The NEON document number and version where detailed information regarding the sampling method used is available; format NEON.DOC.######vX",string,NA,basic
+phe_perindividual,measuredBy,"An identifier for the technician who measured or collected the data",string,NA,basic
+phe_perindividual,identifiedBy,"An identifier for the technician who identified the specimen",string,NA,basic
+phe_perindividual,recordedBy,"An identifier for the technician who recorded the data",string,NA,basic
+phe_perindividual,remarks,"Technician notes; free text comments accompanying the record",string,NA,basic
+phe_perindividual,dataQF,"Data quality flag",string,NA,basic
