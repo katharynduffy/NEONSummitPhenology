@@ -173,5 +173,10 @@ p_all <- subplot(p, p2, p3, nrows = 3)
 p_all
 
 ## can't figure out how to save as .png ###
+```
+Instructions to install orca here: https://github.com/plotly/orca#installation
+```{r}
+if (!require("processx")) install.packages("processx")
 
+orca(p_all, "plotly_insitu_phenology.png")
 ```
