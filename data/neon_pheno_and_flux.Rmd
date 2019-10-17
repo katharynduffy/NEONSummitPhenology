@@ -27,6 +27,9 @@ sites <- c("ONAQ", "HARV", "OSBS")
 
 ```
 
+
+Still working on pulling and formatting flux data
+
 ```{r pull flux data}
 ## from tutorial https://www.neonscience.org/eddy-data-intro
 
@@ -42,11 +45,11 @@ sites <- c("ONAQ", "HARV", "OSBS")
 # 
 
 #timeB <- substring(flux$NIWO$timeBgn, 1, nchar(flux$NIWO$timeBgn)-4)
-timeB <- strptime(timeB, format="%Y-%m-%dT%H:%M:%S", tz="GMT")
-timeB <- as.POSIXct(timeB)
-flux$NIWO <- cbind(timeB, flux$NIWO)
-plot(flux$NIWO$data.fluxCo2.nsae.flux~timeB, pch=".",
-    xlab="Date", ylab="CO2 flux", format="%Y-%m-%d")
+# timeB <- strptime(timeB, format="%Y-%m-%dT%H:%M:%S", tz="GMT")
+# timeB <- as.POSIXct(timeB)
+# flux$NIWO <- cbind(timeB, flux$NIWO)
+# plot(flux$NIWO$data.fluxCo2.nsae.flux~timeB, pch=".",
+#     xlab="Date", ylab="CO2 flux", format="%Y-%m-%d")
 ```
 
 
@@ -144,7 +147,7 @@ ggplot(df_out, aes(x=date, y=count)) +
 ggsave('SpringPhe_inSitu.png')
 
 ggplot(df_out, aes(x=date, y=count, group=taxonID)) +
-  geom_col(aes(x=date, color=taxonID, fill=taxonID), )+
+  geom_col(aes(x=date, color=taxonID, fill=taxonID), position='dodge')+
   ylim(0, 30)+
   facet_grid(siteID ~ .)
 
