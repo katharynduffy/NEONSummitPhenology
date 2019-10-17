@@ -18,6 +18,7 @@ library(phenocamr)
 library(XML)
 library(RCurl)
 library(rlist)
+library(plotly)
 
 ```
 
@@ -25,7 +26,7 @@ library(rlist)
 
 ```{r select sites to pull}
 
-sites <- c("HARV", "OSBS", "CPER")
+sites <- "ONAQ"
 
 
 ```
@@ -33,36 +34,124 @@ sites <- c("HARV", "OSBS", "CPER")
 ```{r pull flux data}
 ## from tutorial https://www.neonscience.org/eddy-data-intro
 
-zipsByProduct(dpID="DP4.00200.001", package="basic", 
-              site=sites, 
-              #startdate="2018-06", enddate="2018-07",
-              savepath="/data", 
-              check.size=F)
-
-flux_dpid <- "DP4.00200.001"
-flux <- stackEddy(filepath=paste0(getwd(), "/neonsummit/data/filesToStack00200"),
-                  level="dp04")
+# zipsByProduct(dpID="DP4.00200.001", package="basic", 
+#               site=sites, 
+#               #startdate="2018-06", enddate="2018-07",
+#               savepath="/data", 
+#               check.size=F)
+# 
+# flux_dpid <- "DP4.00200.001"
+# flux <- stackEddy(filepath=paste0(getwd(), "/neonsummit/data/filesToStack00200"),
+#                   level="dp04")
 
 ```
 
 
 ```{r pull an load in-situ phenology data}
 
-phe_dpid <- 'DP1.10055.001'
-zipsByProduct(dpID='DP1.10055.001', package ="basic", 
-              site=sites, 
-              #savepath="data", 
-              check.size = F)
+# phe_dpid <- 'DP1.10055.001'
+# zipsByProduct(dpID='DP1.10055.001', package ="basic",
+#               site=sites,
+#               savepath="data",
+#               check.size = F)
+# 
+# stackByTable(phe_dpid, filepath=paste0(getwd(), "/filesToStack10055"),
+#              savepath = paste0(getwd(), "/filesToStack10055"), folder=T,
+#              saveUnzippedFiles = FALSE)  #phe data
 
-stackByTable(phe_dpid, filepath=paste0(getwd(), "/filesToStack10055"), 
-             savepath = paste0(getwd(), "/filesToStack10055"), folder=T)  #phe data
- 
+#### save locally, cannot push to git too big  #####
 
-
-statusIntensity <- read.csv(paste0(getwd(), '/filesToStack10055/stackedFiles/phe_statusintensity.csv'),
+statusIntensity <- read.csv(paste0(getwd(),'/stackedFiles/phe_statusintensity.csv'),
                    stringsAsFactors = F, header = T)
 
-perind <- read.csv(paste0(getwd(), '/filesToStack10055/stackedFiles/phe_perindividual.csv'),
+perind <- read.csv(paste0(getwd(), '/stackedFiles/phe_perindividual.csv'),
                             stringsAsFactors = F, header = T)
+
+```
+
+```{r deal with date formatting}
+
+#Format dates
+
+statusIntensity$date <- as.Date(statusIntensity$date, "%Y-%m-%d")
+statusIntensity$editedDate <- as.Date(statusIntensity$editedDate, "%Y-%m-%d")
+statusIntensity$dayOfYear <- yday(statusIntensity$date)
+statusIntensity$year <- substr(statusIntensity$date, 1, 4)
+statusIntensity$monthDay <- format(statusIntensity$date, format="%m-%d")
+
+```
+
+```{r deal with phe duplicates}
+#remove duplicate records
+statusIntensity <- select(statusIntensity, -uid)
+
+statusIntensity <- distinct(statusIntensity)
+
+si_last <- statusIntensity %>%
+  group_by(individualID, date, phenophaseName) %>%
+  filter(editedDate==max(editedDate))
+
+
+```
+
+
+
+
+
+```{r join perind and statusintensity dfs}
+
+perind <- select(perind, individualID, growthForm, taxonID, editedDate)
+perind <- distinct(perind)
+
+ind_last <- perind %>%
+  group_by(individualID) %>%
+  filter(editedDate==max(editedDate))
+
+ind_last <- select(ind_last, -editedDate)
+
+si_last <- left_join(si_last, ind_last)
+
+```
+
+
+
+```{r plot stuff}
+
+df <- filter(si_last, 
+             siteID%in%c('HARV', 'OSBS', 'CPER')
+             & year>2015
+             & phenophaseStatus=='yes' 
+             #& taxonID%in%c('QUFA', 'QULA2')
+             #& growthForm=='Deciduous broadleaf'
+             & phenophaseName%in%c('Breaking leaf buds', 'Initial growth', 'Emerging needles') 
+             #& phenophaseIntensity !=""
+)
+
+
+df_out <- df%>%
+  group_by(siteID, taxonID, date)%>%
+  summarise(count=n())%>%
+  arrange(date)
+
+ggplot(df_out, aes(x=date, y=count)) +
+                   #, group=taxonID)) +
+  geom_line(aes(color=siteID), size=1)+
+  ylim(0, 30)+
+  facet_grid(siteID ~ .)
+
+ggsave('SpringPhe_inSitu.png')
+
+
+p = plot_ly() %>%
+  add_trace(
+  data = df_out[df_out$siteID=='HARV',],
+  x = ~ date,
+  y = ~ count,
+  name = 'HARV',
+  showlegend = TRUE,
+  type = 'scatter',
+  mode = 'line'
+)
+p
 
 ```
