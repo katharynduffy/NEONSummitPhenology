@@ -20,7 +20,7 @@ td <- read.table("NEON.D01.HARV.DP1.00033_DB_1000_3day_transition_dates.csv",
                  sep = ",")
 spring <- td[td$direction == "rising" & td$gcc_value == "gcc_90",]
 fall <- td[td$direction == "falling" & td$gcc_value == "gcc_90",]
-harvardDB = gcc_plot(df, spring, fall, 'Harvard DB')
+harvardDB = gcc_plot(df, spring, 'Harvard DB')
 harvardDB
 ```
 ```{r}
@@ -32,7 +32,7 @@ td <- read.table("NEON.D15.ONAQ.DP1.00033_SH_1000_3day_transition_dates.csv",
                  sep = ",")
 spring <- td[td$direction == "rising" & td$gcc_value == "gcc_90",]
 fall <- td[td$direction == "falling" & td$gcc_value == "gcc_90",]
-ONAQ = gcc_plot(df, spring, fall, 'ONAQ SH')
+ONAQ = gcc_plot(df, spring, 'ONAQ SH')
 ONAQ
 ```
 
@@ -45,7 +45,7 @@ td <- read.table("NEON.D03.OSBS.DP1.00033_EN_1000_3day_transition_dates.csv",
                  sep = ",")
 spring <- td[td$direction == "rising" & td$gcc_value == "gcc_90",]
 fall <- td[td$direction == "falling" & td$gcc_value == "gcc_90",]
-OSBS = gcc_plot(df, spring, fall, 'PhenoCam Phenology Data')
+OSBS = gcc_plot(df, spring, 'OSBS')
 OSBS
 ```
 Order is acutally Harvard, ONAQ, OSBS, but I haven't yet gotten the titles to stay put
