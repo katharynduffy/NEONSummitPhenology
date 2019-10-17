@@ -30,16 +30,16 @@ sites <- c("ONAQ", "HARV", "OSBS")
 ```{r pull flux data}
 ## from tutorial https://www.neonscience.org/eddy-data-intro
 
-zipsByProduct(dpID="DP4.00200.001", package="basic",
-              site=sites,
-              #startdate="2018-06", enddate="2018-07",
-              #savepath="data",
-              check.size=F)
-
-flux_dpid <- "DP4.00200.001"
-flux <- stackEddy(filepath=paste0(getwd(), "/filesToStack00200"),
-                  level="dp04")
-
+# zipsByProduct(dpID="DP4.00200.001", package="basic",
+#               site=sites,
+#               #startdate="2018-06", enddate="2018-07",
+#               #savepath="data",
+#               check.size=F)
+# 
+# flux_dpid <- "DP4.00200.001"
+# flux <- stackEddy(filepath=paste0(getwd(), "/filesToStack00200"),
+#                   level="dp04")
+# 
 
 #timeB <- substring(flux$NIWO$timeBgn, 1, nchar(flux$NIWO$timeBgn)-4)
 timeB <- strptime(timeB, format="%Y-%m-%dT%H:%M:%S", tz="GMT")
@@ -98,9 +98,6 @@ si_last <- statusIntensity %>%
 ```
 
 
-
-
-
 ```{r join perind and statusintensity dfs}
 
 perind <- select(perind, individualID, growthForm, taxonID, editedDate)
@@ -151,7 +148,7 @@ ggplot(df_out, aes(x=date, y=count, group=taxonID)) +
   ylim(0, 30)+
   facet_grid(siteID ~ .)
 
-ggsave('SpringHist_inSitu_bySpecies.png')
+ggsave('SpringBar_inSitu_bySpecies.png')
 
 
 p = plot_ly() %>%
@@ -162,7 +159,7 @@ p = plot_ly() %>%
   name = 'HARV',
   showlegend = TRUE,
   type = 'scatter',
-  mode = 'line'
+  mode = 'marker'
 )
 p2 =  plot_ly() %>%
   add_trace(
@@ -172,7 +169,7 @@ p2 =  plot_ly() %>%
   name = 'OSBS',
   showlegend = TRUE,
   type = 'scatter',
-  mode = 'line'
+  mode = 'marker'
 )
 p3 = plot_ly() %>%
   add_trace(
@@ -182,12 +179,18 @@ p3 = plot_ly() %>%
   name = 'ONAQ',
   showlegend = TRUE,
   type = 'scatter',
-  mode = 'line'
+  mode = 'marker'
 )
 
 p_all <- subplot(p, p2, p3, nrows = 3)
 p_all
 
 ## can't figure out how to save as .png ###
+```
 
+Instructions to install orca here: https://github.com/plotly/orca#installation
+```{r}
+if (!require("processx")) install.packages("processx")
+
+orca(p_all, "plotly_insitu_phenology.png")
 ```
