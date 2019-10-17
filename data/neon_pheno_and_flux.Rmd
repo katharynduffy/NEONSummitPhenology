@@ -8,16 +8,13 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
 ```{r}
+
 library(tidyverse)
 library(neonUtilities)
-library(data.table)
 library(phenocamapi)
 library(lubridate)
 library(jpeg)
 library(phenocamr)
-library(XML)
-library(RCurl)
-library(rlist)
 library(plotly)
 
 ```
@@ -26,8 +23,7 @@ library(plotly)
 
 ```{r select sites to pull}
 
-sites <- "ONAQ"
-
+sites <- c("ONAQ", "HARV", "CPER", "OSBS")
 
 ```
 
@@ -118,7 +114,7 @@ si_last <- left_join(si_last, ind_last)
 ```{r plot stuff}
 
 df <- filter(si_last, 
-             siteID%in%c('HARV', 'OSBS', 'CPER')
+             siteID%in%c('HARV', 'OSBS', 'ONAQ')
              & year>2015
              & phenophaseStatus=='yes' 
              #& taxonID%in%c('QUFA', 'QULA2')
@@ -152,6 +148,30 @@ p = plot_ly() %>%
   type = 'scatter',
   mode = 'line'
 )
-p
+p2 =  plot_ly() %>%
+  add_trace(
+  data = df_out[df_out$siteID=='OSBS',],
+  x = ~ date,
+  y = ~ count,
+  name = 'OSBS',
+  showlegend = TRUE,
+  type = 'scatter',
+  mode = 'line'
+)
+p3 = plot_ly() %>%
+  add_trace(
+  data = df_out[df_out$siteID=='ONAQ',],
+  x = ~ date,
+  y = ~ count,
+  name = 'ONAQ',
+  showlegend = TRUE,
+  type = 'scatter',
+  mode = 'line'
+)
+
+p_all <- subplot(p, p2, p3, nrows = 3)
+p_all
+
+## can't figure out how to save as .png ###
 
 ```
