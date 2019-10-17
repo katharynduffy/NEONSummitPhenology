@@ -146,7 +146,7 @@ p = plot_ly() %>%
   name = 'HARV',
   showlegend = TRUE,
   type = 'scatter',
-  mode = 'line'
+  mode = 'marker'
 )
 p2 =  plot_ly() %>%
   add_trace(
@@ -156,7 +156,7 @@ p2 =  plot_ly() %>%
   name = 'OSBS',
   showlegend = TRUE,
   type = 'scatter',
-  mode = 'line'
+  mode = 'marker'
 )
 p3 = plot_ly() %>%
   add_trace(
@@ -166,7 +166,7 @@ p3 = plot_ly() %>%
   name = 'ONAQ',
   showlegend = TRUE,
   type = 'scatter',
-  mode = 'line'
+  mode = 'marker'
 )
 
 p_all <- subplot(p, p2, p3, nrows = 3)
