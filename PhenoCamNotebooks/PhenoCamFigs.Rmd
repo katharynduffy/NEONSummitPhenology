@@ -1,0 +1,55 @@
+---
+title: "PhenoCamFigs"
+author: "K Duffy"
+date: "10/16/2019"
+output: html_document
+---
+
+```{r}
+library(plotly)
+library(dplyr)
+```
+
+```{r}
+
+df <- read.table("NEON.D01.HARV.DP1.00033_DB_1000_3day.csv", header = TRUE, sep = ",")
+
+# read in the transition date file
+td <- read.table("NEON.D01.HARV.DP1.00033_DB_1000_3day_transition_dates.csv",
+                 header = TRUE,
+                 sep = ",")
+spring <- td[td$direction == "rising" & td$gcc_value == "gcc_90",]
+fall <- td[td$direction == "falling" & td$gcc_value == "gcc_90",]
+harvardDB = gcc_plot(df, spring, fall, 'Harvard DB')
+harvardDB
+```
+```{r}
+df <- read.table("NEON.D15.ONAQ.DP1.00033_SH_1000_3day.csv", header = TRUE, sep = ",")
+
+# read in the transition date file
+td <- read.table("NEON.D15.ONAQ.DP1.00033_SH_1000_3day_transition_dates.csv",
+                 header = TRUE,
+                 sep = ",")
+spring <- td[td$direction == "rising" & td$gcc_value == "gcc_90",]
+fall <- td[td$direction == "falling" & td$gcc_value == "gcc_90",]
+ONAQ = gcc_plot(df, spring, fall, 'ONAQ SH')
+ONAQ
+```
+
+```{r}
+df <- read.table("NEON.D03.OSBS.DP1.00033_EN_1000_3day.csv", header = TRUE, sep = ",")
+
+# read in the transition date file
+td <- read.table("NEON.D03.OSBS.DP1.00033_EN_1000_3day_transition_dates.csv",
+                 header = TRUE,
+                 sep = ",")
+spring <- td[td$direction == "rising" & td$gcc_value == "gcc_90",]
+fall <- td[td$direction == "falling" & td$gcc_value == "gcc_90",]
+OSBS = gcc_plot(df, spring, fall, 'PhenoCam Phenology Data')
+OSBS
+```
+Order is acutally Harvard, ONAQ, OSBS, but I haven't yet gotten the titles to stay put
+```{r}
+comparePlot=subplot(nrows=3, harvardDB, ONAQ, OSBS)
+comparePlot
+```

@@ -38,12 +38,21 @@ Example of data grab:
 ```{r}
 phenocamr::download_phenocam(
   frequency = 3,
-  veg_type = phenos$primary_veg_type[69],
+  veg_type = 'EN',
   roi_id = 1000,
-  site = phenos$site[69],
+  site = phenos$site[15],
   phenophase = TRUE,
   out_dir = "."
   )
+#phenocamr::download_phenocam(
+ # frequency = 3,
+  #veg_type = 'GR',
+  #roi_id = 1000,
+  #site = phenos$site[15],
+  #phenophase = TRUE,
+  #out_dir = "."
+  #)
+
 ```
 
 ```{r}
@@ -136,7 +145,7 @@ fall <- td[td$direction == "falling" & td$gcc_value == "gcc_90",]
 
 Let's load in a function to make plotting smoother.  I'm dropped it here in the markdown so that you can edit it and re-run it as you see fit:
 ```{r}
-gcc_plot = function(gcc, spring, fall){
+gcc_plot = function(gcc, spring, fall, plot_title){
   unix = "1970-01-01"
 
   p = plot_ly(
@@ -261,7 +270,8 @@ gcc_plot = function(gcc, spring, fall){
                  yend = ~ threshold_10,
                  line = list(color = "#8B6508"),
                  name = "EOS (10%) - CI"
-    )
+    )%>% 
+    layout(title=plot_title)
   return (p)
 }
 
@@ -269,6 +279,38 @@ gcc_plot = function(gcc, spring, fall){
 
 ```{r}
 
-gr1 = gcc_plot(df, spring, fall)
-gr1
+plot1 = gcc_plot(df, spring, fall)
+plot1
+```
+Now I'll pull in the other two sites and plot up all 3 phenological signals:
+```{r}
+
+df <- read.table("NEON.D03.DSNY.DP1.00033_GR_1000_3day.csv", header = TRUE, sep = ",")
+
+# read in the transition date file
+td <- read.table("NEON.D03.DSNY.DP1.00033_GR_1000_3day_transition_dates.csv",
+                 header = TRUE,
+                 sep = ",")
+spring <- td[td$direction == "rising" & td$gcc_value == "gcc_90",]
+fall <- td[td$direction == "falling" & td$gcc_value == "gcc_90",]
+plot2 = gcc_plot(df, spring, fall)
+plot2
+```
+```{r}
+df <- read.table("NEON.D16.ABBY.DP1.00033_EN_1000_3day.csv", header = TRUE, sep = ",")
+
+# read in the transition date file
+td <- read.table("NEON.D16.ABBY.DP1.00033_EN_1000_3day_transition_dates.csv",
+                 header = TRUE,
+                 sep = ",")
+spring <- td[td$direction == "rising" & td$gcc_value == "gcc_90",]
+fall <- td[td$direction == "falling" & td$gcc_value == "gcc_90",]
+plot3 = gcc_plot(df, spring, fall)
+plot3
+```
+
+Stack the plots:
+```{r}
+all_plot=subplot(nrows=3, plot1, plot2, plot3)
+all_plot
 ```

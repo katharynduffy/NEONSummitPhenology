@@ -1,0 +1,68 @@
+---
+title: "PhenoCam Image Notebook"
+author: "K Duffy"
+date: "10/16/2019"
+output: html_document
+---
+```{r}
+library(data.table)
+library(phenocamapi)
+library(lubridate)
+library(jpeg)
+```
+## Download midday images
+While PhenoCam sites may have many images in a given day, many simple analyses
+can use just the midday image when the sun is most directly overhead the canopy. 
+Therefore, extracting a list of midday images (only one image a day) can be useful. 
+```{r midday-list, fig.height=5, fig.width=8, message=FALSE}
+# obtaining midday_images for HARV
+HARV_middays <- get_midday_list('NEON.D01.HARV.DP1.00033')
+# see the first few rows
+head(HARV_middays)
+```
+Now we have a list of all the midday images from this Phenocam. Let's download
+them and plot 
+```{r midday-download, fig.height=5, fig.width=8}
+# download a file
+destfile <- tempfile(fileext = '.jpg')
+# download only the first available file
+# modify the `[1]` to download other images
+download.file(HARV_middays[1], destfile = destfile, mode = 'wb')
+# plot the image
+img <- try(readJPEG(destfile))
+if(class(img)!='try-error'){
+  par(mar= c(0,0,0,0))
+  plot(0:1,0:1, type='n', axes= FALSE, xlab= '', ylab = '')
+  rasterImage(img, 0, 0, 1, 1)
+}
+```
+### Download midday images for a given time range
+Now we can access all the midday images and download them one at a time. However,
+we frequently want all the images within a specific time range of interest. We'll
+learn how to do that next. 
+```{r midday-time-range, fig.height=6, fig.width=8, message=FALSE, eval=TRUE}
+# open a temporary directory
+tmp_dir <- tempdir()
+# download a subset. Example NEON.D01.HARV.DP1.00033 2017
+download_midday_images(site = 'NEON.D01.HARV.DP1.00033', # which site
+                       y = 2017, # which year(s)
+                       months = 1:12, # which month(s)
+                       days = 15, # which days on month(s)
+                       download_dir = tmp_dir) # where on your computer
+# list of downloaded files
+HARV_middays_path <- dir(tmp_dir, pattern = 'NEON.D01.HARV.DP1.00033*', full.names = TRUE)
+head(HARV_middays_path)
+```
+We can demonstrate the seasonality of HARV forest observed from the camera. (Note
+this code may take a while to run through the loop).
+```{r plot-monthly-forest, fig.height=6, fig.width=8, message=FALSE, eval=TRUE}
+n <- length(HARV_middays_path)
+par(mar= c(0,0,0,0), mfrow=c(4,3), oma=c(0,0,3,0))
+for(i in 1:n){
+  img <- readJPEG(HARV_middays_path[i])
+  plot(0:1,0:1, type='n', axes= FALSE, xlab= '', ylab = '')
+  rasterImage(img, 0, 0, 1, 1)
+  mtext(month.name[i], line = -2)
+}
+mtext('Seasonal variation of forest at NEON.D01.HARV.DP1.00033', font = 2, outer = TRUE)
+```
