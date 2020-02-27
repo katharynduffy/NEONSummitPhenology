@@ -11,6 +11,9 @@ output: html_document
 library('rnpn')
 library(tidyverse)
 library(stringr)
+library(lubridate)
+library(htmlTable)
+
 ```
 
 
@@ -36,25 +39,54 @@ stationIDs <- neonSites$station_id[neonSites$siteID%in%sitesOfInterest]
 ```{r, download data from npn}
 df_mag <- npn_download_magnitude_phenometrics(request_source='KatieJ',
                                           period_frequency = '7',
-                                          years=c('2015', '2016', '2017', '2018'), 
+                                          years=c('2015', '2016', '2017', '2018', '2019'), 
                                           station_ids=c(35924)
                                           )
 
 
 df_site <- npn_download_site_phenometrics(request_source='KatieJ',
-                                          years=c('2015', '2016', '2017', '2018'), 
+                                          years=c('2013','2014', '2015', '2016', '2017', '2018','2019'), 
                                           station_ids=stationIDs
                                           )
 
 ```
 
 
-```{r, subset}
+```{r, subset and summarize}
 df_site$sciName <- paste(df_site$genus, df_site$species, sep=' ')
+
+for(i in 1:nrow(df_site)){ 
+  df_site$siteName[i] <- neonSites$siteID[neonSites$station_id==df_site$site_id[i]]
+}
+
 site_sub <- df_site%>%
-  select("mean_first_yes_year")
+  select(siteName, sciName, year=mean_first_yes_year, phenophase_description, mean_first_yes_doy, mean_last_yes_doy)
+
+firstPhase <- site_sub%>%
+  filter(phenophase_description%in%c('Breaking leaf buds', 'Breaking needle buds', 'Emerging needles (pines)',
+                                     'Initial growth (forbs)', 'Initial growth (grasses/sedges)') & year!=-9999)%>%
+  arrange(siteName, sciName, year)
+
+firstPhase$firstYesDate <- as.Date(firstPhase$mean_first_yes_doy, origin = as.Date(paste0(firstPhase$year, "-01-01"),tz = "UTC") - days(1), tz = "UTC") 
+firstPhase$lastYesDate <- as.Date(firstPhase$mean_last_yes_doy, origin = as.Date(paste0(firstPhase$year, "-01-01"),tz = "UTC") - days(1), tz = "UTC") 
 
 
+
+lastPhase <- site_sub%>%
+  filter(phenophase_description%in%c('Leaves (forbs)', 'Leaves (grasses)', 'Leaves') )%>%
+  select(-mean_first_yes_doy)%>%
+  arrange(siteName, sciName, year)
+
+lastPhase$lastYesDate <- as.Date(lastPhase$mean_last_yes_doy, origin = as.Date(paste0(lastPhase$year, "-01-01"),tz = "UTC") - days(1), tz = "UTC") 
+
+
+# not printing date correctly
+# print(xtable(firstPhase), type="html", file="firstPhase.html")
+# 
+# print(xtable(lastPhase), type="html", file="lastPhase.html")
+
+write.csv(firstPhase, 'firstPhase.csv', row.names=FALSE)
+write.csv(lastPhase, 'lastPhase.csv', row.names=FALSE)
 
 ```
 
