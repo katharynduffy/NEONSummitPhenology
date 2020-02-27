@@ -1,0 +1,73 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+#install.packages("devtools")
+#library('devtools')
+#devtools::install_github("usa-npn/rnpn")
+
+library('rnpn')
+library(tidyverse)
+library(stringr)
+```
+
+
+```{r, get station list}
+species_list <- npn_species()
+
+
+site <- npn_stations()
+#subset to only NEON
+neonSites <- site[site$network_id==77,]
+#split out site names
+neonSites$siteID <- substr(neonSites$station_name, 1, 4)
+#primary or phenocam?
+neonSites$type <- sub(".*-", "", neonSites$station_name)
+
+sitesOfInterest <- c("HARV", "ONAQ", "OSBS", "DSNY", "ABBY")
+stationIDs <- neonSites$station_id[neonSites$siteID%in%sitesOfInterest]
+
+```
+
+
+
+```{r, download data from npn}
+df_mag <- npn_download_magnitude_phenometrics(request_source='KatieJ',
+                                          period_frequency = '7',
+                                          years=c('2015', '2016', '2017', '2018'), 
+                                          station_ids=c(35924)
+                                          )
+
+
+df_site <- npn_download_site_phenometrics(request_source='KatieJ',
+                                          years=c('2015', '2016', '2017', '2018'), 
+                                          station_ids=stationIDs
+                                          )
+
+```
+
+
+```{r, subset}
+df_site$sciName <- paste(df_site$genus, df_site$species, sep=' ')
+site_sub <- df_site%>%
+  select("mean_first_yes_year")
+
+
+
+```
+
+
+```{r, plot}
+df <- filter(df_site, mean_first_yes_year==2018)
+ggplot(df, aes(x=mean_first_yes_year, y = first_yes_sample_size, color=phenophase_description)) +
+  #ggplot(df, aes(x=dayOfYear, ..count.., fill=phenophaseIntensity, color=phenophaseIntensity)) +  
+  #geom_density(position="stack")+  # stacks data vertically
+  #geom_density(alpha=0.8)+  # sensitivity of the curves
+  #ggtitle("Leaves and Increasing Leaf Size status - D03")+
+  geom_histogram()+  
+  facet_wrap(~site_id, scale="free_y")#+ # places taxonID in separate windows
+  #xlim(min(df$date)-15, max(df$date)+15) # x-axis scales by date
+
+```
