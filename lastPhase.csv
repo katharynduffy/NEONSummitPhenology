@@ -1,0 +1,78 @@
+"siteName","sciName","year","phenophase_description","mean_last_yes_doy","lastYesDate"
+"ABBY","Corylus cornuta",2016,"Leaves",299,2016-10-25
+"ABBY","Corylus cornuta",2017,"Leaves",298,2017-10-25
+"ABBY","Corylus cornuta",2018,"Leaves",297,2018-10-24
+"ABBY","Corylus cornuta",2018,"Leaves",-9999,1990-08-16
+"ABBY","Corylus cornuta",2019,"Leaves",165,2019-06-14
+"DSNY","Andropogon virginicus",2014,"Leaves (grasses)",253,2014-09-10
+"DSNY","Andropogon virginicus",2015,"Leaves (grasses)",95,2015-04-05
+"DSNY","Andropogon virginicus",2016,"Leaves (grasses)",109,2016-04-18
+"DSNY","Andropogon virginicus",2017,"Leaves (grasses)",184,2017-07-03
+"DSNY","Andropogon virginicus",2018,"Leaves (grasses)",161,2018-06-10
+"DSNY","Andropogon virginicus",2019,"Leaves (grasses)",85,2019-03-26
+"DSNY","Aristida stricta",2014,"Leaves (grasses)",127,2014-05-07
+"DSNY","Aristida stricta",2015,"Leaves (grasses)",103,2015-04-13
+"DSNY","Aristida stricta",2017,"Leaves (grasses)",262,2017-09-19
+"DSNY","Aristida stricta",2018,"Leaves (grasses)",129,2018-05-09
+"DSNY","Aristida stricta",2019,"Leaves (grasses)",84,2019-03-25
+"DSNY","Asimina reticulata",2014,"Leaves",138,2014-05-18
+"DSNY","Euthamia graminifolia",2014,"Leaves (forbs)",157,2014-06-06
+"DSNY","Euthamia graminifolia",2015,"Leaves (forbs)",204,2015-07-23
+"DSNY","Euthamia graminifolia",2015,"Leaves (forbs)",87,2015-03-28
+"DSNY","Euthamia graminifolia",2016,"Leaves (forbs)",149,2016-05-28
+"DSNY","Euthamia graminifolia",2017,"Leaves (forbs)",202,2017-07-21
+"DSNY","Euthamia graminifolia",2018,"Leaves (forbs)",122,2018-05-02
+"DSNY","Euthamia graminifolia",2019,"Leaves (forbs)",70,2019-03-11
+"HARV","Acer rubrum",-9999,"Leaves",289,NA
+"HARV","Acer rubrum",2014,"Leaves",288,2014-10-15
+"HARV","Acer rubrum",2015,"Leaves",291,2015-10-18
+"HARV","Acer rubrum",2016,"Leaves",296,2016-10-22
+"HARV","Acer rubrum",2017,"Leaves",294,2017-10-21
+"HARV","Acer rubrum",2018,"Leaves",295,2018-10-22
+"HARV","Acer rubrum",2019,"Leaves",217,2019-08-05
+"HARV","Acer rubrum",2019,"Leaves",-9999,1991-08-16
+"HARV","Aralia nudicaulis",-9999,"Leaves (forbs)",270,NA
+"HARV","Aralia nudicaulis",2014,"Leaves (forbs)",260,2014-09-17
+"HARV","Aralia nudicaulis",2015,"Leaves (forbs)",269,2015-09-26
+"HARV","Aralia nudicaulis",2016,"Leaves (forbs)",217,2016-08-04
+"HARV","Aralia nudicaulis",2017,"Leaves (forbs)",268,2017-09-25
+"HARV","Aralia nudicaulis",2018,"Leaves (forbs)",260,2018-09-17
+"HARV","Aralia nudicaulis",2019,"Leaves (forbs)",190,2019-07-09
+"HARV","Quercus rubra",-9999,"Leaves",317,NA
+"HARV","Quercus rubra",-9999,"Leaves",310,NA
+"HARV","Quercus rubra",2014,"Leaves",-9999,1986-08-16
+"HARV","Quercus rubra",2015,"Leaves",-9999,1987-08-16
+"HARV","Quercus rubra",2016,"Leaves",278,2016-10-04
+"HARV","Quercus rubra",2017,"Leaves",314,2017-11-10
+"HARV","Quercus rubra",2018,"Leaves",310,2018-11-06
+"HARV","Quercus rubra",2019,"Leaves",-9999,1991-08-16
+"HARV","Quercus rubra",2019,"Leaves",-9999,1991-08-16
+"ONAQ","Bromus tectorum",-9999,"Leaves (grasses)",178,NA
+"ONAQ","Bromus tectorum",2014,"Leaves (grasses)",-9999,1986-08-16
+"ONAQ","Bromus tectorum",2015,"Leaves (grasses)",172,2015-06-21
+"ONAQ","Bromus tectorum",2016,"Leaves (grasses)",152,2016-05-31
+"ONAQ","Bromus tectorum",2017,"Leaves (grasses)",196,2017-07-15
+"ONAQ","Bromus tectorum",2017,"Leaves (grasses)",305,2017-11-01
+"ONAQ","Bromus tectorum",2018,"Leaves (grasses)",237,2018-08-25
+"ONAQ","Bromus tectorum",2018,"Leaves (grasses)",304,2018-10-31
+"ONAQ","Bromus tectorum",2019,"Leaves (grasses)",172,2019-06-21
+"ONAQ","Ranunculus testiculatus",2014,"Leaves (forbs)",-9999,1986-08-16
+"ONAQ","Ranunculus testiculatus",2016,"Leaves (forbs)",131,2016-05-10
+"ONAQ","Ranunculus testiculatus",2017,"Leaves (forbs)",134,2017-05-14
+"ONAQ","Ranunculus testiculatus",2018,"Leaves (forbs)",119,2018-04-29
+"ONAQ","Ranunculus testiculatus",2018,"Leaves (forbs)",112,2018-04-22
+"ONAQ","Ranunculus testiculatus",2019,"Leaves (forbs)",132,2019-05-12
+"ONAQ","Ranunculus testiculatus",2019,"Leaves (forbs)",129,2019-05-09
+"OSBS","Aristida stricta",2013,"Leaves (grasses)",303,2013-10-30
+"OSBS","Aristida stricta",2014,"Leaves (grasses)",220,2014-08-08
+"OSBS","Aristida stricta",2015,"Leaves (grasses)",244,2015-09-01
+"OSBS","Aristida stricta",2016,"Leaves (grasses)",121,2016-04-30
+"OSBS","Aristida stricta",2017,"Leaves (grasses)",238,2017-08-26
+"OSBS","Aristida stricta",2019,"Leaves (grasses)",77,2019-03-18
+"OSBS","Quercus laevis",2013,"Leaves",303,2013-10-30
+"OSBS","Quercus laevis",2014,"Leaves",119,2014-04-29
+"OSBS","Quercus laevis",2015,"Leaves",84,2015-03-25
+"OSBS","Quercus laevis",2016,"Leaves",144,2016-05-23
+"OSBS","Quercus laevis",2017,"Leaves",241,2017-08-29
+"OSBS","Quercus laevis",2018,"Leaves",279,2018-10-06
+"OSBS","Quercus laevis",2019,"Leaves",71,2019-03-12
