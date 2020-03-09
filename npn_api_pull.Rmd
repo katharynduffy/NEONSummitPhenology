@@ -57,14 +57,15 @@ df_site$sciName <- paste(df_site$genus, df_site$species, sep=' ')
 
 for(i in 1:nrow(df_site)){ 
   df_site$siteName[i] <- neonSites$siteID[neonSites$station_id==df_site$site_id[i]]
+  df_site$plotType[i] <- neonSites$type[neonSites$station_id==df_site$site_id[i]]
 }
 
 site_sub <- df_site%>%
-  select(siteName, sciName, year=mean_first_yes_year, phenophase_description, mean_first_yes_doy, mean_last_yes_doy)
+  select(siteName, sciName, plotType, year=mean_first_yes_year,first_yes_sample_size, last_yes_sample_size, phenophase_description, mean_first_yes_doy, mean_last_yes_doy)
 
 firstPhase <- site_sub%>%
-  filter(phenophase_description%in%c('Breaking leaf buds', 'Breaking needle buds', 'Emerging needles (pines)',
-                                     'Initial growth (forbs)', 'Initial growth (grasses/sedges)') & year!=-9999)%>%
+  filter(phenophase_description%in%c('Breaking leaf buds', 'Breaking needle buds (conifers)', 'Emerging needles (pines)',
+                                     'Initial growth (forbs)', 'Initial growth (grasses/sedges)', 'Young leaves (tree/shrub)') & year!=-9999)%>%
   arrange(siteName, sciName, year)
 
 firstPhase$firstYesDate <- as.Date(firstPhase$mean_first_yes_doy, origin = as.Date(paste0(firstPhase$year, "-01-01"),tz = "UTC") - days(1), tz = "UTC") 
@@ -92,14 +93,15 @@ write.csv(lastPhase, 'lastPhase.csv', row.names=FALSE)
 
 
 ```{r, plot}
-df <- filter(df_site, mean_first_yes_year==2018)
-ggplot(df, aes(x=mean_first_yes_year, y = first_yes_sample_size, color=phenophase_description)) +
+df <- filter(firstPhase, siteName=='ABBY')
+ggplot(df, aes(x=mean_first_yes_doy, fill=sciName)) +
+  #y = first_yes_sample_size
   #ggplot(df, aes(x=dayOfYear, ..count.., fill=phenophaseIntensity, color=phenophaseIntensity)) +  
   #geom_density(position="stack")+  # stacks data vertically
   #geom_density(alpha=0.8)+  # sensitivity of the curves
   #ggtitle("Leaves and Increasing Leaf Size status - D03")+
-  geom_histogram()+  
-  facet_wrap(~site_id, scale="free_y")#+ # places taxonID in separate windows
+  geom_bar()+  
+  facet_wrap(~year) #, scale="free_y")#+ # places taxonID in separate windows
   #xlim(min(df$date)-15, max(df$date)+15) # x-axis scales by date
 
 ```
