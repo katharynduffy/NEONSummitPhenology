@@ -38,9 +38,9 @@ Example of data grab:
 ```{r}
 phenocamr::download_phenocam(
   frequency = 3,
-  veg_type = 'EN',
+  veg_type = 'GR',
   roi_id = 1000,
-  site = phenos$site[15],
+  site = phenos$site[11],
   phenophase = TRUE,
   out_dir = "."
   )
@@ -66,26 +66,8 @@ td <- read.table("NEON.D15.ONAQ.DP1.00033_SH_1000_3day_transition_dates.csv",
 ```
 
 ```{r}
-p = plot_ly() %>%
-  add_trace(
-  data = df,
-  x = ~ as.Date(date),
-  y = ~ smooth_gcc_90,
-  name = 'Smoothed GCC',
-  showlegend = TRUE,
-  type = 'scatter',
-  mode = 'line'
-) %>% add_markers(
-  data=df,
-  x ~ as.Date(date),
-  y = ~gcc_90,
-  name = 'GCC',
-  type = 'scatter',
-  color ='#07A4B5',
-  opacity=.5
-)
-p
-```
+
+
 
 ###Threshold values
 
