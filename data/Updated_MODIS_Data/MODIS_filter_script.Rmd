@@ -1,0 +1,81 @@
+---
+title: "Filter MODIS"
+author: "K Duffy"
+date: "9/10/2020"
+output: html_document
+---
+
+## Script to filter the raw NDVI data from MODIS
+
+```{r}
+library(dplyr)
+library(plotly)
+```
+
+Here's an example for just ABBY:
+```{r}
+#read in the data
+
+df_NDVI=read.csv('./data/Updated_MODIS_Data/abby/ABBY-MOD13Q1-006-results.csv', stringsAsFactors = FALSE)
+#Read in a QA/QC filter
+qc_vals=read.csv('/Users/kdw223/Research/PostDoc/NEONSummitPhenology/data/Updated_MODIS_Data/qc_vals_MODIS.csv', stringsAsFactors = FALSE)
+```
+
+Filter for QC vals and reformat date:
+```{r}
+df_NDVI=df_NDVI[is.element(qc_vals$Value, df_NDVI$MOD13Q1_006__250m_16_days_VI_Quality), ]
+df_NDVI$Date=as.Date(df_NDVI$Date)
+```
+
+You'll want to change this date to whenever the tower came online for NEON:
+
+```{r}
+# df_NDVI$Date=ymd(df_NDVI$Date)
+# df_EVI$Date=ymd(df_EVI$date)
+
+df_NDVI=df_NDVI%>%
+  filter(Date>'2013-11-1')%>%
+  arrange(Date)%>%
+  mutate(m_NDVI=smooth(MOD13Q1_006__250m_16_days_NDVI))
+```
+
+PLot the data as a quick check:
+
+```{r}
+x <- list(
+  title = "Date")
+y <- list(
+  title = "MODIS NDVI")
+fig = plot_ly(
+)%>%
+  add_trace(
+    data = df_NDVI,
+    x = ~ Date,
+    y = ~ df_NDVI$MOD13Q1_006__250m_16_days_NDVI, 
+    showlegend = TRUE,
+    type = 'scatter',
+    mode = 'markers',
+    symbol='square',
+     opacity = 0.7,
+    name='MODIS NDVI',
+    legend=TRUE,
+    marker=list(color="goldenrod", symbol='diamond')
+  ) %>%
+  add_trace(
+    x=~df_NDVI$Date,
+    y=~df_NDVI$m_NDVI,
+    mode = "lines",
+    # type = "scatter",
+     opacity = 0.3,
+    showlegend=FALSE,
+    line = list(color="goldenrod")
+
+  )
+
+
+
+fig
+         
+```         
+
+Hope this helps Rong!
