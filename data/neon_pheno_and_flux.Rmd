@@ -23,7 +23,7 @@ library(plotly)
 
 ```{r select sites to pull}
 
-sites <- c("ONAQ", "HARV", "OSBS")
+sites <- c("ONAQ", "MOAB")
 
 ```
 
@@ -55,12 +55,12 @@ Still working on pulling and formatting flux data
 
 ```{r pull an load in-situ phenology data}
 
-# phe_dpid <- 'DP1.10055.001'
-# zipsByProduct(dpID='DP1.10055.001', package ="basic",
-#               site=sites,
-#               savepath="data",
-#               check.size = F)
-# 
+phe_dpid <- 'DP1.10055.001'
+zipsByProduct(dpID='DP1.10055.001', package ="basic",
+              site=sites,
+              savepath="data",
+              check.size = F)
+#
 # stackByTable(phe_dpid, filepath=paste0(getwd(), "/filesToStack10055"),
 #              savepath = paste0(getwd(), "/filesToStack10055"), folder=T,
 #              saveUnzippedFiles = FALSE)  #phe data
@@ -73,6 +73,12 @@ statusIntensity <- read.csv(paste0(getwd(),'/stackedFiles/phe_statusintensity.cs
 perind <- read.csv(paste0(getwd(), '/stackedFiles/phe_perindividual.csv'),
                             stringsAsFactors = F, header = T)
 
+```
+
+```{r}
+stackByTable(phe_dpid, filepath=paste0(getwd(), "/data/filesToStack"),
+              savepath = paste0(getwd(), "/filesToStack"), folder=T,
+              saveUnzippedFiles = FALSE)  #phe data
 ```
 
 ```{r deal with date formatting}
@@ -121,8 +127,8 @@ si_last <- left_join(si_last, ind_last)
 ```{r plot stuff}
 
 df <- filter(si_last, 
-             siteID%in%c('HARV', 'OSBS', 'ONAQ')
-             & year>2015
+             siteID%in%c('ONAQ', 'MOAB')
+            # & year>2015
              & phenophaseStatus%in%c('yes') 
              #& taxonID%in%c('QUFA', 'QULA2')
              #& growthForm=='Deciduous broadleaf'
@@ -181,7 +187,7 @@ p3 = plot_ly() %>%
   y = ~ count,
   name = 'ONAQ',
   showlegend = TRUE,
-  type = 'scatter',
+  type = 'bar',
   mode = 'marker'
 )
 
